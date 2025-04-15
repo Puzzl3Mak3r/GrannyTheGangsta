@@ -1,0 +1,11 @@
+
+StartScreen,Core.PlayLevel
+
+StartScreen,Core.StartScreen
+MainGame,Core.MainGame
+GameOver,Core.GameOver
+EndScreen,Core.EndScreen
+MapScreen,Core.MapScreen
+IntroScreen,Core.IntroScreen
+LoadoutScreen,Core.LoadoutScreen
+LevelSelect,Core.LevelSelect
