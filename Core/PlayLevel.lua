@@ -123,6 +123,38 @@ local function movePlayerGrid(dx, dy)
 
 end
 
+local function interact()
+    if isMoving or not playing then return end
+    isMoving = true
+
+    -- Check if player can move in that direction
+
+    local newX = player.x + (dx * tileSize)
+    local newY = player.y + (dy * tileSize)
+
+    -- Optional: Add bounds / collision check here
+
+    -- Find target tile's grid position
+    local targetX = math.floor((newX - cx) / tileSize)
+    local targetY = math.floor((newY - cy) / tileSize)
+
+    -- Check for wall at that position
+    local isBlocked = false
+    for i = 2, #rows do
+        local rx = tonumber(rows[i][1])
+        local ry = tonumber(rows[i][2])
+        local solid = rows[i][3] == "true"
+        local loot = rows[i][4] == "loot"
+
+        if rx == targetX and ry == targetY and loot then
+            isBlocked = true
+            break
+        end
+    end
+
+    -- 
+end
+
 local function onKeyEvent(event)
     if event.phase == "down" then
         -- Move
@@ -143,6 +175,7 @@ local function onKeyEvent(event)
         -- Interact
         if event.keyName == "space" and interactable then
             -- Interact with object
+            interact()
         end
     end
     return false
@@ -225,6 +258,10 @@ local function buildLevel(build)
 
                 if isSolid then
                     rectTable[id]:setFillColor(0.4, 0.4, 0.4) -- dark gray for walls
+                elseif special == "loot" then
+                    rectTable[id]:setFillColor(0, 0.8, 0.8) -- light gray for floor
+                elseif special == "guard" then
+                    rectTable[id]:setFillColor(0.8, 0, 0) -- light gray for floor
                 else
                     rectTable[id]:setFillColor(0.8, 0.8, 0.8) -- light gray for floor
                 end
@@ -240,7 +277,7 @@ local function buildLevel(build)
     end
 end
 
-local path = system.pathForFile("Levels/Debug.csv", system.ResourceDirectory)
+local path = system.pathForFile("Levels/Degub2.csv", system.ResourceDirectory)
 local file = io.open(path, "r")
 
 if file then

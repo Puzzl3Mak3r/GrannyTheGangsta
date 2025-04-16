@@ -1,5 +1,5 @@
 
-StartScreen,Core.PlayLevel
+StartScreen,Core.EditLevel
 
 StartScreen,Core.StartScreen
 MainGame,Core.MainGame
